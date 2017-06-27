@@ -1,0 +1,49 @@
+hystrix:
+  image: Shijin/hystrix-dashboard
+  ports:
+   - "7979:7979"
+  links:
+   - gateway
+   - discovery
+discovery:
+  image: Shijin/discovery-microservice
+  ports:
+   - "8761:8761"
+configserver:
+  image: Shijin/config-microservice
+  ports:
+   - "8888:8888"
+  links:
+   - discovery
+gateway:
+  image: Shijin/api-gateway-microservice
+  ports:
+   - "10000:10000"
+  links:
+   - discovery
+   - configserver
+   - user
+   - movie
+   - recommendation
+user:
+  image: Shijin/users-microservice
+  links:
+   - discovery
+   - configserver
+movie:
+  image: Shijin/movie-microservice
+  links:
+   - discovery
+   - configserver
+recommendation:
+  image: Shijin/recommendation-microservice
+  links:
+   - discovery
+   - configserver
+moviesui:
+  image: Shijin/movies-ui
+  ports:
+     - "9006:9006"
+  links:
+   - discovery
+   - configserver

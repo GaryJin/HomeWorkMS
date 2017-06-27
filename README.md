@@ -1,0 +1,22 @@
+# 大作业说明
+
+分布式系统的大作业，基于spring cloud框架的一个微服务的简单的小demo
+实验环境：
+	硬件配置：i5-6700 32G内存
+操作系统：win10 
+因为研究方向不是这个领域，为了方便事后卸载，所以实验的时候使用了VMWare12.0搭载ubuntu14.0系统，在虚拟机当中进行试验，所以搭建的时候性能有些影响，给虚拟机分配的硬件配置为6G内存（一开始是分配的4G，后来发现，利用Docker开启多个微服务非常吃内存，在4G内存的时候经常配置失败，于是换成了6G内存）
+
+项目介绍：
+我们利用微服务架构建立了一个简单的平台，主要包含了如下内容: Integration testing using Docker、Polyglot persistence、Microservice architecture、Service discovery、API gateway
+每个服务都用Docker部署，并且可以使用Docker-compose进行集成测试。
+多语言一致性：
+微服务架构允许不同服务的开发人员使用不同的语言进行开发，在项目开发的过程中，我们对这个功能进行了尝试。我们使用REST和消息总线来整合各个微服务之间的数据，因为每个微服务本身都使用不同的数据库。
+服务发现：
+我们工程使用了两个发现服务，一个是NetflixEureka，另一个是Hashicorp的Consul。我们将Eureka作为API的网关代理，将Consul用于提供集群的DNS
+API网关
+通过使用Eureka作为代理网关，每一个微服务都要与Eureka通信来获得整个集群的API路由。使用这个方法可以使得集群中的每一个微服务都是负载均衡的，并且均可通过一个API网关来使自身可得。每一个服务都可以自动地发现并路由API请求到拥有该路由的服务。这个代理方法在开发用户自己的接口时同样有效，因为该平台的全部API可以通过使用自己的主机作为代理的方式来获得。
+
+项目运行方法：
+git clone git@github.com:GaryJin/HomeWorkMS.git
+进入docker目录下
+docker-compose up
